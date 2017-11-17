@@ -14,15 +14,15 @@ class Tree {
   // Continues recursively until the value has been found or all of the children
   // have been checked
   contains(value) {
-    const firstNode = this.children[0];
-    const checkNode = (currentNode) => {
-      if (currentNode.value === value) return true;
-     currentNode = firstNode.children[0];
-    return checkNode(currentNode);
-    }
-    return checkNode(firstNode);
+    if (this.value === value) return true;
+    for (let i = 0; i < this.children.length; i++) {
+      const child = this.children[i];
+      if (child.value === value) return true;
+      if (child.children[0] && child.contains(value)) return true;
     } 
+    return false;
   }
+}
 
 
 module.exports = Tree;

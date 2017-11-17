@@ -40,7 +40,7 @@ describe('BinarySearchTree', () => {
     binarySearchTree.insert(7);
     binarySearchTree.insert(9);
     binarySearchTree.depthFirstForEach(foo);
-    expect(array).toEqual([5, 2, 3, 7, 9]);
+    expect((array), ([5, 2, 3, 7, 9]));
   });
 
   it('should execute a callback on every value in the tree using "breadthFirstForEach" in the correct order', () => {
