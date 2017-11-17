@@ -116,9 +116,17 @@ class Graph {
       for (let i = 0; i < toVArr.length; i++) {
         if (fromVValue === toVArr[i].value) toVArr.splice(i, 1);
       }
+      if (toVertex.edges.length === 0) {
+        const index = this.vertices.indexOf(toVertex);
+        this.vertices.splice(index, 1);
+      }
       
       for (let i = 0; i < fromVArr.length; i++) {
         if (toVValue === fromVArr[i].value) fromVArr.splice(i, 1);
+      }
+      if (fromVertex.edges.length === 0) {
+        const index = this.vertices.indexOf(fromVertex);
+        this.vertices.splice(index, 1);
       }
     }
   }
