@@ -108,9 +108,22 @@ class Graph {
   // If a vertex would be left without any edges as a result of calling this function, those
   // vertices should be removed as well
   removeEdge(fromVertex, toVertex) {
-
+    if (this.checkIfEdgeExists(fromVertex, toVertex)) {
+      const fromVValue = fromVertex.value;
+      const toVValue = toVertex.value;
+      const fromVArr = fromVertex.edges;
+      const toVArr = toVertex.edges;
+      for (let i = 0; i < toVArr.length; i++) {
+        if (fromVValue === toVArr[i].value) toVArr.splice(i, 1);
+      }
+      
+      for (let i = 0; i < fromVArr.length; i++) {
+        if (toVValue === fromVArr[i].value) fromVArr.splice(i, 1);
+      }
+    }
   }
 }
+
 
 module.exports = Graph;
 
