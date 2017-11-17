@@ -100,6 +100,7 @@ class Graph {
   // Adds an edge between the two given vertices if no edge already exists between them
   // Again, an edge means both vertices reference the other 
   addEdge(fromVertex, toVertex) {
+    const random = this;
     fromVertex.pushToEdges(toVertex);
     toVertex.pushToEdges(fromVertex);
   }
