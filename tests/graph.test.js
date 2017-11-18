@@ -52,6 +52,7 @@ describe('Graph', () => {
     expect(graph.checkIfEdgeExists(monkey, human)).toBe(false);
   });
 
+
   it('should remove nodes without any edges', () => {
     const A = graph.addVertex('A');
     const b = graph.addVertex('b');

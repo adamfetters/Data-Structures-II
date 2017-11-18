@@ -57,10 +57,8 @@ class Graph {
   // Checks all the vertices of the graph for the target value
   // Returns true or false
   contains(value) {
-    if (this.vertices.length > 0) {
-      for (let i = 0; i < this.vertices.length; i++) {
-        if (this.vertices[i].value === value) return true;
-      }
+    for (let i = 0; i < this.vertices.length; i++) {
+      if (this.vertices[i].value === value) return true;
     }
     return false;
   }
@@ -69,11 +67,20 @@ class Graph {
   // and removes the vertex if it is found
   // This function should also handle the removing of all edge references for the removed vertex
   removeVertex(value) {
+    const filteredVertices = [];
+    let vertexForDeletion;
     for (let i = 0; i < this.vertices.length; i++) {
       if (this.vertices[i].value === value) {
-        this.vertices.splice(i, 1);
+        vertexForDeletion = this.vertices[i];
+      } else {
+        filteredVertices.push(this.vertices[i]);
       }
     }
+    this.vertices = filteredVertices;  
+
+    vertexForDeletion.edges.forEach((vertex) => {
+      this.removeEdge(vertexForDeletion, vertex);
+    });
   }
   
   // Checks the two input vertices to see if each one references the other in their respective edges array
@@ -83,7 +90,7 @@ class Graph {
   // array methods on said arrays. There is no method to traverse the edge arrays built into the GraphNode class
   checkIfEdgeExists(fromVertex, toVertex) {
     const random = this.vertices;
-    const fromValue = fromVertex.value;
+   /* const fromValue = fromVertex.value;
     const toValue = toVertex.value;
     const toVArr = toVertex.edges;
     const fromVArr = fromVertex.edges;
@@ -95,12 +102,15 @@ class Graph {
       if (fromVArr[i].value === toValue) count++;
     }
     if (count >= 2) return true;
-    return false;
+    return false; */
+
+    // Teacher Model
+    return (fromVertex.edges.includes(toVertex) && toVertex.edges.includes(fromVertex));
   }
   // Adds an edge between the two given vertices if no edge already exists between them
   // Again, an edge means both vertices reference the other 
   addEdge(fromVertex, toVertex) {
-    const random = this;
+    if (this.checkIfEdgeExists(fromVertex, toVertex)) return;
     fromVertex.pushToEdges(toVertex);
     toVertex.pushToEdges(fromVertex);
   }
@@ -128,6 +138,11 @@ class Graph {
       if (fromVertex.edges.length === 0) {
         const index = this.vertices.indexOf(fromVertex);
         this.vertices.splice(index, 1);
+
+        // Teacher Model
+        // if (!this.checkIfEdgeExists(fromVertex, toVertex)) return false;
+        // fromVertex.edges = fromVertex.filter(vertex => vertex.value !== toVertex.value); 
+        // toVertex.edges = toVertex.filter(vertex => vertex.value !== fromVertex.value);
       }
     }
   }
